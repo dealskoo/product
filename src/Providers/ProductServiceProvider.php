@@ -23,6 +23,8 @@ class ProductServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if ($this->app->runningInConsole()) {
+
+        }
     }
 }
