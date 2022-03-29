@@ -2,9 +2,12 @@
 
 namespace Dealskoo\Product\Traits;
 
-use Illuminate\Database\Eloquent\Model;
+use Dealskoo\Product\Models\Product;
 
-class HasProduct extends Model
+trait HasProduct
 {
-
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
