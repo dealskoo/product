@@ -21,12 +21,12 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 10, 2)->nullable(0);
             $table->text('description');
             $table->integer('score')->default(0);
-            $table->timestamp('approved_at')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->unsignedBigInteger('platform_id')->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
