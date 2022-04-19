@@ -18,13 +18,31 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imageable, Taggable;
 
-    protected $appends = [];
+    protected $appends = [
+        'cover_url'
+    ];
 
     protected $fillable = [
-
+        'slug',
+        'name',
+        'url',
+        'price',
+        'description',
+        'score',
+        'category_id',
+        'country_id',
+        'seller_id',
+        'brand_id',
+        'platform_id',
+        'approved_at'
     ];
 
     protected $casts = [
-
+        'approved_at' => 'datatime'
     ];
+
+    public function getCoverUrlAttribute()
+    {
+        return '';
+    }
 }
