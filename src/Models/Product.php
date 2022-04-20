@@ -8,18 +8,19 @@ use Dealskoo\Country\Traits\HasCountry;
 use Dealskoo\Seller\Traits\HasSeller;
 use Dealskoo\Brand\Traits\HasBrand;
 use Dealskoo\Platform\Traits\HasPlatform;
-use Dealskoo\Image\Traits\Imageable;
+use Dealskoo\Image\Traits\Imaginable;
 use Dealskoo\Tag\Traits\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imageable, Taggable;
+    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable;
 
     protected $appends = [
-        'cover_url'
+        'cover', 'cover_url'
     ];
 
     protected $fillable = [
@@ -43,6 +44,6 @@ class Product extends Model
 
     public function getCoverUrlAttribute()
     {
-        return '';
+        return empty($this->cover) ? asset(config('product.default_cover')) : Storage::url($this->cover->filename);
     }
 }

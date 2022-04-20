@@ -4,6 +4,7 @@ namespace Database\Factories\Dealskoo\Product\Models;
 
 use Dealskoo\Brand\Models\Brand;
 use Dealskoo\Category\Models\Category;
+use Dealskoo\Platform\Models\Platform;
 use Dealskoo\Product\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
