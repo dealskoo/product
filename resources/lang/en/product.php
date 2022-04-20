@@ -18,5 +18,8 @@ return [
     'approved_at' => 'Approved At',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
-    'action' => 'Action'
+    'action' => 'Action',
+    'add_product' => 'Add Product',
+    'edit_product' => 'Edit Product',
+    'tag' => 'Tag',
 ];

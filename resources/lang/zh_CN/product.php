@@ -18,5 +18,8 @@ return [
     'approved_at' => '审核时间',
     'created_at' => '创建时间',
     'updated_at' => '更新时间',
-    'action' => '操作'
+    'action' => '操作',
+    'add_product' => '添加产品',
+    'edit_product' => '编辑产品',
+    'tag' => '标签',
 ];
