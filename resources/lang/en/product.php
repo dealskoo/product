@@ -22,4 +22,10 @@ return [
     'add_product' => 'Add Product',
     'edit_product' => 'Edit Product',
     'tag' => 'Tag',
+    'name_placeholder' => 'Name',
+    'url_placeholder' => 'URL',
+    'price_placeholder' => 'Price',
+    'tag_placeholder' => 'Tag',
+    'description_placeholder' => 'Description',
+    'next' => 'Next'
 ];

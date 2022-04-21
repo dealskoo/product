@@ -128,9 +128,8 @@
                                     <div class="col-md-12 mb-3">
                                         <label for="description"
                                                class="form-label">{{ __('product::product.description') }}</label>
-                                        <textarea class="form-control" name="description" id="description" required
-                                                  tabindex="8"
-                                                  rows="5"
+                                        <textarea class="form-control" name="description" id="description"
+                                                  tabindex="8" rows="5"
                                                   placeholder="{{ __('product::product.description_placeholder') }}">{{ old('description') }}</textarea>
                                     </div>
                                 </div>
@@ -138,7 +137,7 @@
                         </div> <!-- end row -->
                         <div class="text-end">
                             <button type="submit" class="btn btn-success mt-2" tabindex="9"><i
-                                    class="mdi mdi-content-save"></i> {{ __('seller::seller.save') }}
+                                    class="mdi mdi-content-save"></i> {{ __('product::product.next') }}
                             </button>
                         </div>
                     </form>

@@ -22,4 +22,10 @@ return [
     'add_product' => '添加产品',
     'edit_product' => '编辑产品',
     'tag' => '标签',
+    'name_placeholder' => '名称',
+    'url_placeholder' => 'URL',
+    'price_placeholder' => '价格',
+    'tag_placeholder' => '标签',
+    'description_placeholder' => '描述',
+    'next' => '下一步'
 ];
