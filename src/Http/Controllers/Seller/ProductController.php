@@ -2,11 +2,13 @@
 
 namespace Dealskoo\Product\Http\Controllers\Seller;
 
+use Carbon\Carbon;
 use Dealskoo\Brand\Models\Brand;
 use Dealskoo\Category\Models\Category;
 use Dealskoo\Platform\Models\Platform;
 use Dealskoo\Seller\Http\Controllers\Controller as SellerController;
 use Dealskoo\Product\Models\Product;
+use Dealskoo\Tag\Facades\TagManager;
 use Illuminate\Http\Request;
 
 class ProductController extends SellerController
@@ -44,8 +46,8 @@ class ProductController extends SellerController
             $row[] = $product->price;
             $row[] = $product->category->name;
             $row[] = $product->country->name;
-            $row[] = $product->brand->name;
-            $row[] = $product->platform->name;
+            $row[] = $product->brand ? $product->brand->name : '';
+            $row[] = $product->platform ? $product->platform->name : '';
             $row[] = $product->approved_at != null ? Carbon::parse($product->approved_at)->format('Y-m-d H:i:s') : null;
             $row[] = Carbon::parse($product->created_at)->format('Y-m-d H:i:s');
             $row[] = Carbon::parse($product->updated_at)->format('Y-m-d H:i:s');
@@ -66,29 +68,64 @@ class ProductController extends SellerController
     public function create(Request $request)
     {
         $categories = Category::where('country_id', $request->country()->id)->get();
-        $brands = Brand::where('country_id', $request->country()->id)->get();
-        $platforms = Platform::where('country_id', $request->country()->id)->get();
+        $brands = Brand::where('country_id', $request->country()->id)->where('approved', true)->get();
+        $platforms = Platform::where('country_id', $request->country()->id)->where('approved', true)->get();
         return view('product::seller.product.create', ['categories' => $categories, 'brands' => $brands, 'platforms' => $platforms]);
     }
 
     public function store(Request $request)
     {
+        $vals = [
+            'name' => ['required', 'string'],
+            'url' => ['required', 'url'],
+            'price' => ['required', 'numeric'],
+            'category_id' => ['required', 'exists:categories,id']
+        ];
+        if ($request->has(['brand_id', 'numberic'])) {
+            $vals['brand_id'] = ['exists:brands,id'];
+        }
+        if ($request->has(['platform_id', 'numberic'])) {
+            $vals['platform_id'] = ['exists:platforms,id'];
+        }
 
+        $request->validate($vals);
+        $product = new Product($request->only([
+            'name',
+            'url',
+            'price',
+            'category_id',
+            'brand_id',
+            'platform_id',
+            'description'
+        ]));
+        $seller = $request->user();
+        $product->seller_id = $seller->id;
+        $product->country_id = $seller->country_id;
+        $product->save();
+        $tags = $request->input('tags', []);
+        TagManager::sync($product, $tags);
+        return redirect(route('seller.products.images', $product));
     }
 
     public function edit(Request $request, $id)
     {
-
+        $product = Product::where('seller_id', $request->user()->id)->findOrFail($id);
+        $categories = Category::where('country_id', $request->country()->id)->get();
+        $brands = Brand::where('country_id', $request->country()->id)->where('approved', true)->get();
+        $platforms = Platform::where('country_id', $request->country()->id)->where('approved', true)->get();
+        return view('product::seller.product.edit', ['product' => $product, 'categories' => $categories, 'brands' => $brands, 'platforms' => $platforms]);
     }
 
     public function update(Request $request, $id)
     {
+        $product = Product::where('seller_id', $request->user()->id)->findOrFail($id);
 
     }
 
     public function images(Request $request, $product_id)
     {
-
+        $product = Product::where('seller_id', $request->user()->id)->findOrFail($product_id);
+        return view('product::seller.product.images', ['product' => $product]);
     }
 
     public function upload(Request $request, $product_id)

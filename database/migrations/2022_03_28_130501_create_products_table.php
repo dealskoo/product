@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->decimal('price', 10, 2)->nullable(0);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('score')->default(0);
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('country_id');

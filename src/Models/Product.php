@@ -39,7 +39,7 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'approved_at' => 'datatime'
+        'approved_at' => 'datetime'
     ];
 
     public function getCoverUrlAttribute()
