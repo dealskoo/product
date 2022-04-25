@@ -20,7 +20,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('seller.products.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('seller.products.store') }}" method="post">
                         @csrf
                         @if(!empty(session('success')))
                             <div class="alert alert-success">

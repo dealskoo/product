@@ -118,8 +118,40 @@ class ProductController extends SellerController
 
     public function update(Request $request, $id)
     {
-        $product = Product::where('seller_id', $request->user()->id)->findOrFail($id);
+        $vals = [
+            'name' => ['required', 'string'],
+            'url' => ['required', 'url'],
+            'price' => ['required', 'numeric'],
+            'category_id' => ['required', 'exists:categories,id']
+        ];
+        if ($request->has(['brand_id', 'numberic'])) {
+            $vals['brand_id'] = ['exists:brands,id'];
+        }
+        if ($request->has(['platform_id', 'numberic'])) {
+            $vals['platform_id'] = ['exists:platforms,id'];
+        }
 
+        $request->validate($vals);
+        $product = Product::where('seller_id', $request->user()->id)->findOrFail($id);
+        $product->fill($request->only([
+            'name',
+            'url',
+            'price',
+            'category_id',
+            'brand_id',
+            'platform_id',
+            'description'
+        ]));
+        $product->approved_at = null;
+        $product->save();
+        $tags = $request->input('tags', []);
+        TagManager::sync($product, $tags);
+        return redirect(route('seller.products.images', $product));
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        return ['status' => Product::where('seller_id', $request->user()->id)->where('id', $id)->delete()];
     }
 
     public function images(Request $request, $product_id)
