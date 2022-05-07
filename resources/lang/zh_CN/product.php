@@ -21,11 +21,16 @@ return [
     'action' => '操作',
     'add_product' => '添加产品',
     'edit_product' => '编辑产品',
+    'view_product' => '查看产品',
     'tag' => '标签',
     'name_placeholder' => '名称',
     'url_placeholder' => 'URL',
     'price_placeholder' => '价格',
     'tag_placeholder' => '标签',
     'description_placeholder' => '描述',
-    'next' => '下一步'
+    'next' => '下一步',
+    'upload_images' => '上传图片',
+    'click_to_upload' => '选择图片',
+    'approved' => '审核通过',
+    'slug_placeholder' => '标识',
 ];

@@ -4,6 +4,7 @@ namespace Dealskoo\Product\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
+use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Product\Models\Product;
 use Illuminate\Http\Request;
 
@@ -73,16 +74,30 @@ class ProductController extends AdminController
 
     public function show(Request $request, $id)
     {
-
+        abort_if(!$request->user()->canDo('products.show'), 403);
+        $product = Product::query()->findOrFail($id);
+        return view('product::admin.product.show', ['product' => $product]);
     }
 
     public function edit(Request $request, $id)
     {
-
+        abort_if(!$request->user()->canDo('products.edit'), 403);
+        $product = Product::query()->findOrFail($id);
+        return view('product::admin.product.edit', ['product' => $product]);
     }
 
     public function update(Request $request, $id)
     {
-
+        abort_if(!$request->user()->canDo('products.edit'), 403);
+        $request->validate([
+            'slug' => ['required', new Slug('products', 'slug', $id, 'id')]
+        ]);
+        $product = Product::query()->findOrFail($id);
+        $product->fill($request->only([
+            'slug'
+        ]));
+        $product->approved_at = $request->boolean('approved', false) ? Carbon::now() : null;
+        $product->save();
+        return back()->with('success', __('admin::admin.update_success'));
     }
 }

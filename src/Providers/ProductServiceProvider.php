@@ -46,7 +46,7 @@ class ProductServiceProvider extends ServiceProvider
 
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'product');
 
-        AdminMenu::route('admin.products.index', 'product::product.products', [], ['icon' => 'uil-briefcase', 'permission' => 'products.index'])->order(8);
+        AdminMenu::route('admin.products.index', 'product::product.products', [], ['icon' => 'uil-briefcase', 'permission' => 'products.index'])->order(3);
 
         PermissionManager::add(new Permission('products.index', 'Product List'));
         PermissionManager::add(new Permission('products.show', 'View Product'), 'products.index');

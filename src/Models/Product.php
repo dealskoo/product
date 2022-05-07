@@ -10,6 +10,7 @@ use Dealskoo\Brand\Traits\HasBrand;
 use Dealskoo\Platform\Traits\HasPlatform;
 use Dealskoo\Image\Traits\Imaginable;
 use Dealskoo\Tag\Traits\Taggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -45,5 +46,10 @@ class Product extends Model
     public function getCoverUrlAttribute()
     {
         return empty($this->cover) ? asset(config('product.default_cover')) : Storage::url($this->cover->filename);
+    }
+
+    public function scopeApproved(Builder $builder)
+    {
+        return $builder->whereNotNull('approved_at');
     }
 }

@@ -9,6 +9,7 @@ use Dealskoo\Platform\Models\Platform;
 use Dealskoo\Seller\Http\Controllers\Controller as SellerController;
 use Dealskoo\Product\Models\Product;
 use Dealskoo\Tag\Facades\TagManager;
+use Dealskoo\Image\Models\Image;
 use Illuminate\Http\Request;
 
 class ProductController extends SellerController
@@ -67,9 +68,9 @@ class ProductController extends SellerController
 
     public function create(Request $request)
     {
-        $categories = Category::where('country_id', $request->country()->id)->get();
-        $brands = Brand::where('country_id', $request->country()->id)->where('approved', true)->get();
-        $platforms = Platform::where('country_id', $request->country()->id)->where('approved', true)->get();
+        $categories = Category::where('country_id', $request->user()->country->id)->get();
+        $brands = Brand::where('country_id', $request->user()->country->id)->where('approved', true)->get();
+        $platforms = Platform::where('country_id', $request->user()->country->id)->where('approved', true)->get();
         return view('product::seller.product.create', ['categories' => $categories, 'brands' => $brands, 'platforms' => $platforms]);
     }
 
@@ -110,9 +111,9 @@ class ProductController extends SellerController
     public function edit(Request $request, $id)
     {
         $product = Product::where('seller_id', $request->user()->id)->findOrFail($id);
-        $categories = Category::where('country_id', $request->country()->id)->get();
-        $brands = Brand::where('country_id', $request->country()->id)->where('approved', true)->get();
-        $platforms = Platform::where('country_id', $request->country()->id)->where('approved', true)->get();
+        $categories = Category::where('country_id', $request->user()->country->id)->get();
+        $brands = Brand::where('country_id', $request->user()->country->id)->where('approved', true)->get();
+        $platforms = Platform::where('country_id', $request->user()->country->id)->where('approved', true)->get();
         return view('product::seller.product.edit', ['product' => $product, 'categories' => $categories, 'brands' => $brands, 'platforms' => $platforms]);
     }
 
@@ -162,11 +163,22 @@ class ProductController extends SellerController
 
     public function upload(Request $request, $product_id)
     {
-
+        $request->validate([
+            'file' => ['required', 'image', 'max:1000']
+        ]);
+        $product = Product::where('seller_id', $request->user()->id)->findOrFail($product_id);
+        $file = $request->file('file');
+        $filename = $product->id . '_' . time() . '.' . $file->guessExtension();
+        $path = $file->storeAs('product/images/' . date('Ymd'), $filename);
+        $image = new Image(['filename' => $path]);
+        $product->images()->save($image);
+        $image->refresh();
+        return $image;
     }
 
     public function remove(Request $request, $product_id, $image_id)
     {
-
+        $product = Product::where('seller_id', $request->user()->id)->findOrFail($product_id);
+        return ['status' => $product->images()->delete($image_id)];
     }
 }
