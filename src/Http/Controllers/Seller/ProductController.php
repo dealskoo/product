@@ -69,8 +69,8 @@ class ProductController extends SellerController
     public function create(Request $request)
     {
         $categories = Category::where('country_id', $request->user()->country->id)->get();
-        $brands = Brand::where('country_id', $request->user()->country->id)->where('approved', true)->get();
-        $platforms = Platform::where('country_id', $request->user()->country->id)->where('approved', true)->get();
+        $brands = Brand::approved()->where('country_id', $request->user()->country->id)->get();
+        $platforms = Platform::approved()->where('country_id', $request->user()->country->id)->get();
         return view('product::seller.product.create', ['categories' => $categories, 'brands' => $brands, 'platforms' => $platforms]);
     }
 
@@ -112,8 +112,8 @@ class ProductController extends SellerController
     {
         $product = Product::where('seller_id', $request->user()->id)->findOrFail($id);
         $categories = Category::where('country_id', $request->user()->country->id)->get();
-        $brands = Brand::where('country_id', $request->user()->country->id)->where('approved', true)->get();
-        $platforms = Platform::where('country_id', $request->user()->country->id)->where('approved', true)->get();
+        $brands = Brand::approved()->where('country_id', $request->user()->country->id)->get();
+        $platforms = Platform::approved()->where('country_id', $request->user()->country->id)->get();
         return view('product::seller.product.edit', ['product' => $product, 'categories' => $categories, 'brands' => $brands, 'platforms' => $platforms]);
     }
 
