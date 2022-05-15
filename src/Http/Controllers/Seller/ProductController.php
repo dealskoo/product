@@ -52,9 +52,14 @@ class ProductController extends SellerController
             $row[] = $product->approved_at != null ? Carbon::parse($product->approved_at)->format('Y-m-d H:i:s') : null;
             $row[] = Carbon::parse($product->created_at)->format('Y-m-d H:i:s');
             $row[] = Carbon::parse($product->updated_at)->format('Y-m-d H:i:s');
-            $upload_link = '<a href="' . route('seller.products.images', $product) . '" class="action-icon"><i class="mdi mdi-file-image"></i></a>';
-            $edit_link = '<a href="' . route('seller.products.edit', $product) . '" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>';
-            $destroy_link = '<a href="javascript:void(0);" class="action-icon delete-btn" data-table="products_table" data-url="' . route('seller.products.destroy', $product) . '"> <i class="mdi mdi-delete"></i></a>';
+            $upload_link = '';
+            $edit_link = '';
+            $destroy_link = '';
+            if ($product->approved_at == null) {
+                $upload_link = '<a href="' . route('seller.products.images', $product) . '" class="action-icon"><i class="mdi mdi-file-image"></i></a>';
+                $edit_link = '<a href="' . route('seller.products.edit', $product) . '" class="action-icon"><i class="mdi mdi-square-edit-outline"></i></a>';
+                $destroy_link = '<a href="javascript:void(0);" class="action-icon delete-btn" data-table="products_table" data-url="' . route('seller.products.destroy', $product) . '"> <i class="mdi mdi-delete"></i></a>';
+            }
             $row[] = $upload_link . $edit_link . $destroy_link;
             $rows[] = $row;
         }
