@@ -10,6 +10,7 @@ use Dealskoo\Brand\Traits\HasBrand;
 use Dealskoo\Platform\Traits\HasPlatform;
 use Dealskoo\Image\Traits\Imaginable;
 use Dealskoo\Tag\Traits\Taggable;
+use Dealskoo\Comment\Traits\Commentable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable;
+    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable, Commentable;
 
     protected $appends = [
         'cover', 'cover_url'
