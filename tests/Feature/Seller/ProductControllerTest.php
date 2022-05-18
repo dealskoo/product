@@ -3,6 +3,7 @@
 namespace Dealskoo\Product\Tests\Feature\Seller;
 
 use Dealskoo\Image\Models\Image;
+use Dealskoo\Country\Models\Country;
 use Dealskoo\Product\Models\Product;
 use Dealskoo\Product\Tests\TestCase;
 use Dealskoo\Seller\Models\Seller;
@@ -32,6 +33,7 @@ class ProductControllerTest extends TestCase
 
     public function test_create()
     {
+        $country = Country::factory()->create(['alpha2' => 'US']);
         $seller = Seller::factory()->create();
         $response = $this->actingAs($seller, 'seller')->get(route('seller.products.create'));
         $response->assertStatus(200);
@@ -55,8 +57,9 @@ class ProductControllerTest extends TestCase
 
     public function test_edit()
     {
+        $country = Country::factory()->create(['alpha2' => 'US']);
         $seller = Seller::factory()->create();
-        $product = Product::factory()->create(['seller_id' => $seller->id]);
+        $product = Product::factory()->create(['seller_id' => $seller->id, 'country_id' => $country->id]);
         $response = $this->actingAs($seller, 'seller')->get(route('seller.products.edit', $product));
         $response->assertStatus(200);
     }

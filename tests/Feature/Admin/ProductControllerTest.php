@@ -3,6 +3,7 @@
 namespace Dealskoo\Product\Tests\Feature\Admin;
 
 use Dealskoo\Admin\Models\Admin;
+use Dealskoo\Country\Models\Country;
 use Dealskoo\Product\Models\Product;
 use Dealskoo\Product\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,16 +30,18 @@ class ProductControllerTest extends TestCase
 
     public function test_show()
     {
+        $country = Country::factory()->create(['alpha2' => 'US']);
         $admin = Admin::factory()->isOwner()->create();
-        $product = Product::factory()->create();
+        $product = Product::factory()->create(['country_id' => $country->id]);
         $response = $this->actingAs($admin, 'admin')->get(route('admin.products.show', $product));
         $response->assertStatus(200);
     }
 
     public function test_edit()
     {
+        $country = Country::factory()->create(['alpha2' => 'US']);
         $admin = Admin::factory()->isOwner()->create();
-        $product = Product::factory()->create();
+        $product = Product::factory()->create(['country_id' => $country->id]);
         $response = $this->actingAs($admin, 'admin')->get(route('admin.products.edit', $product));
         $response->assertStatus(200);
     }
