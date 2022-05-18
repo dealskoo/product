@@ -43,7 +43,7 @@ class ProductController extends AdminController
             $row = [];
             $row[] = $product->id;
             $row[] = $product->name;
-            $row[] = $product->price;
+            $row[] = $product->country->currency_symbol . $product->price;
             $row[] = $product->clicks;
             $row[] = $product->category->name;
             $row[] = $product->country->name;
