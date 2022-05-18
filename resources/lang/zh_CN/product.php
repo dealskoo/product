@@ -8,6 +8,7 @@ return [
     'slug' => '标识',
     'url' => 'URL',
     'price' => '价格',
+    'clicks' => '点击量',
     'description' => '描述',
     'score' => '评分',
     'category' => '分类',

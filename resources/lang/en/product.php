@@ -8,6 +8,7 @@ return [
     'slug' => 'Slug',
     'url' => 'URL',
     'price' => 'Price',
+    'clicks' => 'Clicks',
     'description' => 'Description',
     'score' => 'Score',
     'category' => 'Category',

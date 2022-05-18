@@ -30,6 +30,7 @@ class Product extends Model
         'name',
         'url',
         'price',
+        'clicks',
         'description',
         'score',
         'category_id',

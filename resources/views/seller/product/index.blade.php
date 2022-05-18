@@ -34,6 +34,7 @@
                                 <th>{{ __('product::product.id') }}</th>
                                 <th>{{ __('product::product.name') }}</th>
                                 <th>{{ __('product::product.price') }}</th>
+                                <th>{{ __('product::product.clicks') }}</th>
                                 <th>{{ __('product::product.category') }}</th>
                                 <th>{{ __('product::product.country') }}</th>
                                 <th>{{ __('product::product.brand') }}</th>
@@ -73,12 +74,13 @@
                     {'orderable': true},
                     {'orderable': true},
                     {'orderable': true},
+                    {'orderable': true},
                     {'orderable': false},
                 ],
                 "order": [[0, "desc"]],
                 "drawCallback": function () {
                     $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-                    $('#products_table tr td:nth-child(11)').addClass('table-action');
+                    $('#products_table tr td:nth-child(12)').addClass('table-action');
                     delete_listener();
                 }
             });

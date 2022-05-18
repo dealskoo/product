@@ -28,7 +28,7 @@ class ProductController extends SellerController
         $start = $request->input('start', 0);
         $limit = $request->input('length', 10);
         $keyword = $request->input('search.value');
-        $columns = ['id', 'name', 'price', 'category_id', 'country_id', 'brand_id', 'platform_id', 'approved_at', 'created_at', 'updated_at'];
+        $columns = ['id', 'name', 'price', 'clicks', 'category_id', 'country_id', 'brand_id', 'platform_id', 'approved_at', 'created_at', 'updated_at'];
         $column = $columns[$request->input('order.0.column', 0)];
         $desc = $request->input('order.0.dir', 'desc');
         $query = Product::where('seller_id', $request->user()->id);
@@ -45,6 +45,7 @@ class ProductController extends SellerController
             $row[] = $product->id;
             $row[] = $product->name;
             $row[] = $product->price;
+            $row[] = $product->clicks;
             $row[] = $product->category->name;
             $row[] = $product->country->name;
             $row[] = $product->brand ? $product->brand->name : '';
