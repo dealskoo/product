@@ -16,10 +16,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable, Commentable;
+    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable, Commentable, Searchable;
 
     protected $appends = [
         'cover', 'cover_url'
@@ -53,5 +54,28 @@ class Product extends Model
     public function scopeApproved(Builder $builder)
     {
         return $builder->whereNotNull('approved_at');
+    }
+
+    public function shouldBeSearchable()
+    {
+        return $this->approved_at ? true : false;
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->only([
+            'slug',
+            'name',
+            'url',
+            'price',
+            'clicks',
+            'description',
+            'score',
+            'category_id',
+            'country_id',
+            'seller_id',
+            'brand_id',
+            'platform_id',
+        ]);
     }
 }
