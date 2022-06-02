@@ -25,7 +25,7 @@ class ProductController extends AdminController
         $start = $request->input('start', 0);
         $limit = $request->input('length', 10);
         $keyword = $request->input('search.value');
-        $columns = ['id', 'name', 'price', 'clicks', 'category_id', 'country_id', 'seller_id', 'brand_id', 'platform_id', 'approved_at', 'created_at', 'updated_at'];
+        $columns = ['id', 'name', 'price', 'score', 'clicks', 'category_id', 'country_id', 'seller_id', 'brand_id', 'platform_id', 'approved_at', 'created_at', 'updated_at'];
         $column = $columns[$request->input('order.0.column', 0)];
         $desc = $request->input('order.0.dir', 'desc');
         $query = Product::query();
@@ -44,6 +44,7 @@ class ProductController extends AdminController
             $row[] = $product->id;
             $row[] = $product->name;
             $row[] = $product->country->currency_symbol . $product->price;
+            $row[] = $product->score;
             $row[] = $product->clicks;
             $row[] = $product->category->name;
             $row[] = $product->country->name;
@@ -91,11 +92,13 @@ class ProductController extends AdminController
     {
         abort_if(!$request->user()->canDo('products.edit'), 403);
         $request->validate([
-            'slug' => ['required', new Slug('products', 'slug', $id, 'id')]
+            'slug' => ['required', new Slug('products', 'slug', $id, 'id')],
+            'score' => ['required', 'digits_between:0,' . config('product.max_score')],
         ]);
         $product = Product::query()->findOrFail($id);
         $product->fill($request->only([
-            'slug'
+            'slug',
+            'score'
         ]));
         $product->approved_at = $request->boolean('approved', false) ? Carbon::now() : null;
         $product->save();

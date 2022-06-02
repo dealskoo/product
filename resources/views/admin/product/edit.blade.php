@@ -48,6 +48,12 @@
                                             value="{{ old('slug', $product->slug) }}" tabindex="1" autofocus
                                             placeholder="{{ __('product::product.slug_placeholder') }}">
                                     </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="score" class="form-label">{{ __('product::product.score') }}</label>
+                                        <input type="text" class="form-control" id="score" name="score" required
+                                            value="{{ old('score', $product->score) }}" tabindex="2"
+                                            placeholder="{{ __('product::product.score') }}">
+                                    </div>
                                     <div class="col-md-12 mb-3">
                                         <label for="url" class="form-label">{{ __('product::product.url') }}</label>
                                         <input type="url" class="form-control" readonly value="{{ $product->url }}">
@@ -64,7 +70,7 @@
                                     <div class="col-12 mb-3">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="approved" name="approved"
-                                                tabindex="2" value="1" @if (old('approved') || $product->approved_at != null) checked @endif>
+                                                tabindex="3" value="1" @if (old('approved') || $product->approved_at != null) checked @endif>
                                             <label for="approved"
                                                 class="form-check-label">{{ __('product::product.approved') }}</label>
                                         </div>
@@ -124,7 +130,7 @@
                         </div>
                         <div class="row">
                             <div class="text-end">
-                                <button type="submit" class="btn btn-success mt-2" tabindex="3"><i
+                                <button type="submit" class="btn btn-success mt-2" tabindex="4"><i
                                         class="mdi mdi-content-save"></i> {{ __('admin::admin.save') }}
                                 </button>
                             </div>
