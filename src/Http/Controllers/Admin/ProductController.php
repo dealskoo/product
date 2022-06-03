@@ -49,8 +49,8 @@ class ProductController extends AdminController
             $row[] = $product->category->name;
             $row[] = $product->country->name;
             $row[] = $product->seller->name;
-            $row[] = $product->brand ? $product->brand->name : '';
-            $row[] = $product->platform ? $product->platform->name : '';
+            $row[] = $product->brand ? $product->brand->name : __('Unknown');
+            $row[] = $product->platform ? $product->platform->name : __('Unknown');
             $row[] = $product->approved_at != null ? Carbon::parse($product->approved_at)->format('Y-m-d H:i:s') : null;
             $row[] = Carbon::parse($product->created_at)->format('Y-m-d H:i:s');
             $row[] = Carbon::parse($product->updated_at)->format('Y-m-d H:i:s');
