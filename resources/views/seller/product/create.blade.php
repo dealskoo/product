@@ -102,7 +102,7 @@
                                             class="form-label">{{ __('product::product.brand') }}</label>
                                         <select id="brand_id" name="brand_id" class="form-control select2"
                                             data-toggle="select2" tabindex="5">
-                                            <option value="">{{ __('unknown') }}</option>
+                                            <option value="">{{ __('Unknown') }}</option>
                                             @foreach ($brands as $brand)
                                                 @if (old('brand_id') == $brand->id)
                                                     <option value="{{ $brand->id }}" selected>{{ $brand->name }}
@@ -118,7 +118,7 @@
                                             class="form-label">{{ __('product::product.platform') }}</label>
                                         <select id="platform_id" name="platform_id" class="form-control select2"
                                             data-toggle="select2" tabindex="5">
-                                            <option value="">{{ __('unknown') }}</option>
+                                            <option value="">{{ __('Unknown') }}</option>
                                             @foreach ($platforms as $platform)
                                                 @if (old('platform_id') == $platform->id)
                                                     <option value="{{ $platform->id }}" selected>{{ $platform->name }}

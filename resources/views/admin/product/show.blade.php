@@ -77,13 +77,13 @@
                                     <label for="website"
                                         class="form-label">{{ __('product::product.brand') }}</label>
                                     <input type="text" class="form-control" readonly
-                                        value="{{ $product->brand ? $product->brand->name : __('unknown') }}">
+                                        value="{{ $product->brand ? $product->brand->name : __('Unknown') }}">
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="website"
                                         class="form-label">{{ __('product::product.platform') }}</label>
                                     <input type="text" class="form-control" readonly
-                                        value="{{ $product->platform ? $product->platform->name : __('unknown') }}">
+                                        value="{{ $product->platform ? $product->platform->name : __('Unknown') }}">
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="description"
