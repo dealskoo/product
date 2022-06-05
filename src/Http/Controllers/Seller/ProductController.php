@@ -11,6 +11,7 @@ use Dealskoo\Product\Models\Product;
 use Dealskoo\Tag\Facades\TagManager;
 use Dealskoo\Image\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends SellerController
 {
@@ -43,7 +44,7 @@ class ProductController extends SellerController
         foreach ($products as $product) {
             $row = [];
             $row[] = $product->id;
-            $row[] = $product->name;
+            $row[] = Str::words($product->name, 5, '...');
             $row[] = $product->country->currency_symbol . $product->price;
             $row[] = $product->clicks;
             $row[] = $product->category->name;

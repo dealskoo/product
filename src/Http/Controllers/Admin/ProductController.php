@@ -7,6 +7,7 @@ use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
 use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Product\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends AdminController
 {
@@ -42,7 +43,7 @@ class ProductController extends AdminController
         foreach ($products as $product) {
             $row = [];
             $row[] = $product->id;
-            $row[] = $product->name;
+            $row[] = Str::words($product->name, 5, '...');
             $row[] = $product->country->currency_symbol . $product->price;
             $row[] = $product->score;
             $row[] = $product->clicks;
