@@ -56,7 +56,7 @@
                                         <div class="input-group flex-nowrap">
                                             <span class="input-group-text">{!! request()->country()->currency_symbol !!}</span>
                                             <input type="number" class="form-control" id="price" name="price" required
-                                                value="{{ old('price', $product->price) }}" tabindex="5"
+                                                value="{{ old('price', $product->price) }}" tabindex="5" step="0.01"
                                                 placeholder="{{ __('product::product.price_placeholder') }}">
                                         </div>
                                     </div>

@@ -50,8 +50,8 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="score" class="form-label">{{ __('product::product.score') }}</label>
-                                        <input type="text" class="form-control" id="score" name="score" required
-                                            value="{{ old('score', $product->score) }}" tabindex="2"
+                                        <input type="number" class="form-control" id="score" name="score" required
+                                            value="{{ old('score', $product->score) }}" tabindex="2" step="0.1"
                                             placeholder="{{ __('product::product.score') }}">
                                     </div>
                                     <div class="col-md-12 mb-3">

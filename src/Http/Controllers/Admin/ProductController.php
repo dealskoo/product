@@ -93,7 +93,7 @@ class ProductController extends AdminController
         abort_if(!$request->user()->canDo('products.edit'), 403);
         $request->validate([
             'slug' => ['required', new Slug('products', 'slug', $id, 'id')],
-            'score' => ['required', 'digits_between:0,' . config('product.max_score')],
+            'score' => ['required', 'numeric', 'between:0,' . config('product.max_score')],
         ]);
         $product = Product::query()->findOrFail($id);
         $product->fill($request->only([
