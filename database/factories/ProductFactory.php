@@ -24,8 +24,6 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $brand = Brand::factory()->create();
-
         return [
             'slug' => $this->faker->unique()->slug,
             'name' => $this->faker->title,
@@ -33,11 +31,19 @@ class ProductFactory extends Factory
             'price' => $this->faker->numberBetween(0, 1000),
             'description' => $this->faker->text,
             'score' => $this->faker->numberBetween(0, 5),
-            'category_id' => Category::factory()->create(['country_id' => $brand->country_id]),
-            'country_id' => $brand->country_id,
-            'seller_id' => $brand->seller_id,
-            'brand_id' => $brand->id,
-            'platform_id' => Platform::factory()->create(['country_id' => $brand->country_id, 'seller_id' => $brand->seller_id]),
+            'brand_id' => Brand::factory(),
+            'country_id' => function ($product) {
+                return Brand::find($product['brand_id'])->country_id;
+            },
+            'seller_id' => function ($product) {
+                return Brand::find($product['brand_id'])->seller_id;
+            },
+            'category_id' => function ($product) {
+                return Category::factory()->create(['country_id' => $product['country_id']]);
+            },
+            'platform_id' => function ($product) {
+                return Platform::factory()->create(['country_id' => $product['country_id'], 'seller_id' => $product['seller_id']]);
+            },
         ];
     }
 
