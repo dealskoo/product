@@ -2,7 +2,6 @@
 
 namespace Dealskoo\Product\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
 use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Product\Models\Product;
@@ -101,7 +100,7 @@ class ProductController extends AdminController
             'slug',
             'score'
         ]));
-        $product->approved_at = $request->boolean('approved', false) ? Carbon::now() : null;
+        $product->approved_at = $request->boolean('approved', false) ? now() : null;
         $product->save();
         return back()->with('success', __('admin::admin.update_success'));
     }
