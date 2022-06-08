@@ -2,7 +2,6 @@
 
 namespace Dealskoo\Product\Http\Controllers\Seller;
 
-use Carbon\Carbon;
 use Dealskoo\Brand\Models\Brand;
 use Dealskoo\Category\Models\Category;
 use Dealskoo\Platform\Models\Platform;
@@ -51,9 +50,9 @@ class ProductController extends SellerController
             $row[] = $product->country->name;
             $row[] = $product->brand ? $product->brand->name : '';
             $row[] = $product->platform ? $product->platform->name : '';
-            $row[] = $product->approved_at != null ? Carbon::parse($product->approved_at)->format('Y-m-d H:i:s') : null;
-            $row[] = Carbon::parse($product->created_at)->format('Y-m-d H:i:s');
-            $row[] = Carbon::parse($product->updated_at)->format('Y-m-d H:i:s');
+            $row[] = $product->approved_at != null ? $product->approved_at->format('Y-m-d H:i:s') : null;
+            $row[] = $product->created_at->format('Y-m-d H:i:s');
+            $row[] = $product->updated_at->format('Y-m-d H:i:s');
             $upload_link = '';
             $edit_link = '';
             $destroy_link = '';

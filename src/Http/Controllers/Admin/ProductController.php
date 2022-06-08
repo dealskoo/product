@@ -52,9 +52,9 @@ class ProductController extends AdminController
             $row[] = $product->seller->name;
             $row[] = $product->brand ? $product->brand->name : __('Unknown');
             $row[] = $product->platform ? $product->platform->name : __('Unknown');
-            $row[] = $product->approved_at != null ? Carbon::parse($product->approved_at)->format('Y-m-d H:i:s') : null;
-            $row[] = Carbon::parse($product->created_at)->format('Y-m-d H:i:s');
-            $row[] = Carbon::parse($product->updated_at)->format('Y-m-d H:i:s');
+            $row[] = $product->approved_at != null ? $product->approved_at->format('Y-m-d H:i:s') : null;
+            $row[] = $product->created_at->format('Y-m-d H:i:s');
+            $row[] = $product->updated_at->format('Y-m-d H:i:s');
             $view_link = '';
             if ($can_view) {
                 $view_link = '<a href="' . route('admin.products.show', $product) . '" class="action-icon"><i class="mdi mdi-eye"></i></a>';
