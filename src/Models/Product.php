@@ -11,6 +11,8 @@ use Dealskoo\Platform\Traits\HasPlatform;
 use Dealskoo\Image\Traits\Imaginable;
 use Dealskoo\Tag\Traits\Taggable;
 use Dealskoo\Comment\Traits\Commentable;
+use Dealskoo\Favorite\Traits\Favoriteable;
+use Dealskoo\Like\Traits\Likeable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +22,7 @@ use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable, Commentable, Searchable;
+    use HasFactory, SoftDeletes, HasSlug, HasCategory, HasCountry, HasSeller, HasBrand, HasPlatform, Imaginable, Taggable, Likeable, Favoriteable, Commentable, Searchable;
 
     protected $appends = [
         'cover', 'cover_url'
